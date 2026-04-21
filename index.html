@@ -1,0 +1,355 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta
+      name="description"
+      content="Earnstrack showcase launcher with links to the interactive demo and case study"
+    />
+    <title>Earnstrack Showcase</title>
+    <style>
+      :root {
+        --bg: #f8fafc;
+        --surface: rgba(255, 255, 255, 0.92);
+        --surface-strong: #ffffff;
+        --line: rgba(148, 163, 184, 0.24);
+        --text: #0f172a;
+        --muted: #475569;
+        --brand: #2563eb;
+        --brand-hover: #1d4ed8;
+        --brand-soft: rgba(37, 99, 235, 0.12);
+        --shadow: 0 24px 60px rgba(15, 23, 42, 0.1);
+      }
+
+      * {
+        box-sizing: border-box;
+      }
+
+      body {
+        margin: 0;
+        min-height: 100vh;
+        font-family:
+          -apple-system, BlinkMacSystemFont, "Segoe UI", "Roboto",
+          "Helvetica Neue", sans-serif;
+        color: var(--text);
+        background:
+          radial-gradient(
+            circle at top left,
+            rgba(37, 99, 235, 0.14),
+            transparent 28%
+          ),
+          radial-gradient(
+            circle at bottom right,
+            rgba(59, 130, 246, 0.12),
+            transparent 24%
+          ),
+          linear-gradient(180deg, #eff6ff 0%, #f8fafc 100%);
+      }
+
+      a {
+        color: inherit;
+        text-decoration: none;
+      }
+
+      img {
+        display: block;
+        max-width: 100%;
+      }
+
+      .page {
+        width: min(1120px, calc(100% - 32px));
+        margin: 0 auto;
+        padding: 32px 0 56px;
+      }
+
+      .hero,
+      .card,
+      .summary {
+        background: var(--surface);
+        border: 1px solid var(--line);
+        border-radius: 28px;
+        box-shadow: var(--shadow);
+      }
+
+      .hero {
+        padding: 32px;
+        display: grid;
+        grid-template-columns: 1.05fr 0.95fr;
+        gap: 24px;
+      }
+
+      .eyebrow {
+        margin: 0 0 12px;
+        font-size: 12px;
+        font-weight: 700;
+        text-transform: uppercase;
+        letter-spacing: 0.14em;
+        color: var(--brand);
+      }
+
+      h1,
+      h2,
+      h3,
+      p {
+        margin: 0;
+      }
+
+      h1 {
+        font-size: clamp(40px, 7vw, 68px);
+        line-height: 0.95;
+        max-width: 10ch;
+      }
+
+      .hero-copy p:last-child {
+        margin-top: 18px;
+        max-width: 62ch;
+        color: var(--muted);
+        line-height: 1.72;
+      }
+
+      .hero-side,
+      .cards {
+        display: grid;
+        gap: 16px;
+      }
+
+      .hero-side {
+        grid-template-columns: repeat(3, minmax(0, 1fr));
+      }
+
+      .metric,
+      .card,
+      .summary {
+        padding: 22px;
+      }
+
+      .metric {
+        border-radius: 20px;
+        border: 1px solid var(--line);
+        background: rgba(255, 255, 255, 0.82);
+      }
+
+      .metric strong {
+        display: block;
+        margin-top: 8px;
+        font-size: 26px;
+      }
+
+      .metric span,
+      .card p,
+      .summary p {
+        color: var(--muted);
+        line-height: 1.65;
+      }
+
+      .cards {
+        margin-top: 24px;
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+      }
+
+      .card {
+        display: grid;
+        gap: 16px;
+      }
+
+      .card-top {
+        display: flex;
+        align-items: center;
+        gap: 14px;
+      }
+
+      .card-top img {
+        width: 54px;
+        height: 54px;
+        border-radius: 16px;
+      }
+
+      .label {
+        display: inline-flex;
+        align-self: start;
+        padding: 6px 10px;
+        border-radius: 999px;
+        background: var(--brand-soft);
+        color: var(--brand);
+        font-size: 12px;
+        font-weight: 700;
+        letter-spacing: 0.04em;
+        text-transform: uppercase;
+      }
+
+      .actions {
+        display: flex;
+        gap: 12px;
+        flex-wrap: wrap;
+      }
+
+      .button {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        min-height: 46px;
+        padding: 0 18px;
+        border-radius: 12px;
+        font-weight: 600;
+        transition:
+          transform 160ms ease,
+          background 160ms ease,
+          color 160ms ease;
+      }
+
+      .button:hover {
+        transform: translateY(-1px);
+      }
+
+      .button-primary {
+        background: var(--brand);
+        color: #fff;
+      }
+
+      .button-primary:hover {
+        background: var(--brand-hover);
+      }
+
+      .button-secondary {
+        background: #e5e7eb;
+        color: #111827;
+      }
+
+      .button-secondary:hover {
+        background: #d1d5db;
+      }
+
+      .summary {
+        margin-top: 24px;
+      }
+
+      .summary ul {
+        margin: 12px 0 0;
+        padding-left: 18px;
+        color: var(--muted);
+        line-height: 1.7;
+      }
+
+      @media (max-width: 900px) {
+        .hero,
+        .cards {
+          grid-template-columns: 1fr;
+        }
+
+        .hero-side {
+          grid-template-columns: repeat(3, minmax(0, 1fr));
+        }
+      }
+
+      @media (max-width: 640px) {
+        .page {
+          width: min(100% - 20px, 1120px);
+          padding-top: 20px;
+        }
+
+        .hero,
+        .card,
+        .summary {
+          border-radius: 22px;
+          padding: 22px;
+        }
+
+        .hero-side {
+          grid-template-columns: 1fr;
+        }
+
+        .actions {
+          flex-direction: column;
+        }
+
+        .button {
+          width: 100%;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <main class="page">
+      <section class="hero">
+        <div class="hero-copy">
+          <p class="eyebrow">Portfolio Showcase</p>
+          <h1>Earnstrack Demo Hub</h1>
+          <p>
+            A lightweight static showcase for presenting Earnstrack on a
+            portfolio site. Use the interactive demo for quick exploration, or
+            open the case study for a more structured breakdown of the product,
+            workflow, and UI decisions.
+          </p>
+        </div>
+        <div class="hero-side">
+          <div class="metric">
+            <span>Formats</span>
+            <strong>2</strong>
+          </div>
+          <div class="metric">
+            <span>Interactive</span>
+            <strong>Yes</strong>
+          </div>
+          <div class="metric">
+            <span>Deploy Type</span>
+            <strong>Static</strong>
+          </div>
+        </div>
+      </section>
+
+      <section class="cards">
+        <article class="card">
+          <span class="label">Interactive Demo</span>
+          <div class="card-top">
+            <img src="assets/earnstrack-mark.svg" alt="Earnstrack mark" />
+            <div>
+              <h2>App walkthrough</h2>
+              <p>
+                Standalone demo clone with fake auth, dashboard, services, and
+                settings flow.
+              </p>
+            </div>
+          </div>
+          <div class="actions">
+            <a class="button button-primary" href="earnstrack-demo.html"
+              >Open Demo</a
+            >
+          </div>
+        </article>
+
+        <article class="card">
+          <span class="label">Case Study</span>
+          <div class="card-top">
+            <img src="assets/earnstrack-mark.svg" alt="Earnstrack mark" />
+            <div>
+              <h2>Project breakdown</h2>
+              <p>
+                Static presentation page describing the product context,
+                architecture, and screens.
+              </p>
+            </div>
+          </div>
+          <div class="actions">
+            <a class="button button-secondary" href="earnstrack-case-study.html"
+              >Open Case Study</a
+            >
+          </div>
+        </article>
+      </section>
+
+      <section class="summary">
+        <h3>Deployment notes</h3>
+        <p>
+          This folder is deploy-ready as a static site. Point your host at this
+          directory and use `index.html` as the main portfolio entry URL.
+        </p>
+        <ul>
+          <li>Root page: `index.html`</li>
+          <li>Demo page: `earnstrack-demo.html`</li>
+          <li>Case study page: `earnstrack-case-study.html`</li>
+        </ul>
+      </section>
+    </main>
+  </body>
+</html>

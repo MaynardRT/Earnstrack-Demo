@@ -1,0 +1,982 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Earnstrack Case Study</title>
+    <style>
+      :root {
+        --bg: #f8fafc;
+        --surface: rgba(255, 255, 255, 0.92);
+        --surface-strong: #ffffff;
+        --line: rgba(148, 163, 184, 0.28);
+        --text: #0f172a;
+        --muted: #475569;
+        --brand: #2563eb;
+        --brand-soft: rgba(37, 99, 235, 0.12);
+        --shadow: 0 24px 60px rgba(15, 23, 42, 0.1);
+      }
+
+      * {
+        box-sizing: border-box;
+      }
+
+      body {
+        margin: 0;
+        min-height: 100vh;
+        font-family:
+          -apple-system, BlinkMacSystemFont, "Segoe UI", "Roboto",
+          "Helvetica Neue", sans-serif;
+        color: var(--text);
+        background:
+          radial-gradient(
+            circle at top left,
+            rgba(37, 99, 235, 0.14),
+            transparent 28%
+          ),
+          radial-gradient(
+            circle at bottom right,
+            rgba(59, 130, 246, 0.12),
+            transparent 24%
+          ),
+          linear-gradient(180deg, #eff6ff 0%, #f8fafc 100%);
+      }
+
+      img {
+        display: block;
+        max-width: 100%;
+      }
+
+      .page {
+        width: min(1180px, calc(100% - 32px));
+        margin: 0 auto;
+        padding: 24px 0 48px;
+      }
+
+      .hero,
+      .panel,
+      .shot {
+        background: var(--surface);
+        border: 1px solid var(--line);
+        border-radius: 28px;
+        box-shadow: var(--shadow);
+      }
+
+      .hero {
+        padding: 32px;
+        display: grid;
+        grid-template-columns: 1.1fr 0.9fr;
+        gap: 24px;
+      }
+
+      .eyebrow {
+        margin: 0 0 12px;
+        font-size: 12px;
+        font-weight: 700;
+        text-transform: uppercase;
+        letter-spacing: 0.14em;
+        color: var(--brand);
+      }
+
+      h1,
+      h2,
+      h3,
+      p {
+        margin: 0;
+      }
+
+      h1 {
+        font-size: clamp(38px, 7vw, 68px);
+        line-height: 0.95;
+        max-width: 9ch;
+      }
+
+      .hero-copy p:last-child {
+        margin-top: 18px;
+        max-width: 62ch;
+        color: var(--muted);
+        line-height: 1.72;
+      }
+
+      .hero-side,
+      .grid-3,
+      .grid-2,
+      .screenshot-grid {
+        display: grid;
+        gap: 16px;
+      }
+
+      .hero-side,
+      .grid-3 {
+        grid-template-columns: repeat(3, minmax(0, 1fr));
+      }
+
+      .grid-2,
+      .screenshot-grid {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+      }
+
+      .metric,
+      .feature,
+      .step,
+      .stack,
+      .summary {
+        padding: 20px;
+        border-radius: 20px;
+        border: 1px solid var(--line);
+        background: rgba(255, 255, 255, 0.82);
+      }
+
+      .metric strong {
+        display: block;
+        margin-top: 8px;
+        font-size: 26px;
+      }
+
+      .metric span,
+      .feature p,
+      .step p,
+      .stack p,
+      .summary p {
+        color: var(--muted);
+        line-height: 1.65;
+      }
+
+      .section {
+        margin-top: 24px;
+      }
+
+      .section-header {
+        display: flex;
+        justify-content: space-between;
+        gap: 24px;
+        align-items: end;
+        margin-bottom: 16px;
+      }
+
+      .section-header p {
+        max-width: 58ch;
+        color: var(--muted);
+        line-height: 1.65;
+      }
+
+      .panel {
+        padding: 24px;
+      }
+
+      .list {
+        margin-top: 12px;
+        display: grid;
+        gap: 10px;
+        color: var(--muted);
+      }
+
+      .shot {
+        overflow: hidden;
+      }
+
+      .shot-frame {
+        background: #f8fafc;
+      }
+
+      .shot-bar {
+        display: flex;
+        align-items: center;
+        gap: 8px;
+        padding: 12px 16px;
+        border-bottom: 1px solid #e5e7eb;
+        background: #fff;
+      }
+
+      .shot-dot {
+        width: 10px;
+        height: 10px;
+        border-radius: 999px;
+        background: #cbd5e1;
+      }
+
+      .shot-body {
+        padding: 18px;
+        background: #f8fafc;
+      }
+
+      .shot-login {
+        min-height: 310px;
+        display: grid;
+        place-items: center;
+        background: linear-gradient(to bottom right, #eff6ff, #e0e7ff);
+      }
+
+      .login-mock {
+        width: min(100%, 420px);
+        padding: 24px;
+        background: #fff;
+        border-radius: 12px;
+        box-shadow: 0 1px 3px rgba(15, 23, 42, 0.1);
+      }
+
+      .login-mock-logo {
+        width: 64px;
+        margin: 0 auto 16px;
+      }
+
+      .login-mock h3,
+      .login-mock p {
+        text-align: center;
+      }
+
+      .login-mock p {
+        margin-top: 8px;
+        color: #6b7280;
+      }
+
+      .mock-field {
+        margin-top: 16px;
+      }
+
+      .mock-field span {
+        display: block;
+        margin-bottom: 8px;
+        font-size: 14px;
+        font-weight: 500;
+        color: #374151;
+      }
+
+      .mock-input {
+        height: 42px;
+        border-radius: 8px;
+        border: 1px solid #d1d5db;
+        background: #fff;
+        padding: 0 14px;
+        display: flex;
+        align-items: center;
+        color: #111827;
+      }
+
+      .mock-button {
+        margin-top: 18px;
+        height: 48px;
+        border-radius: 8px;
+        background: #2563eb;
+        color: #fff;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-weight: 600;
+      }
+
+      .shot-dashboard {
+        min-height: 310px;
+        display: grid;
+        grid-template-columns: 210px 1fr;
+        border: 1px solid #e5e7eb;
+        border-radius: 14px;
+        overflow: hidden;
+        background: #fff;
+      }
+
+      .dash-sidebar {
+        border-right: 1px solid #e5e7eb;
+        padding: 14px;
+        background: #fff;
+      }
+
+      .dash-profile {
+        display: flex;
+        gap: 10px;
+        align-items: center;
+        padding: 12px;
+        border-radius: 16px;
+        background: #f9fafb;
+        margin-top: 16px;
+      }
+
+      .dash-avatar {
+        width: 40px;
+        height: 40px;
+        border-radius: 999px;
+        background: linear-gradient(to bottom right, #3b82f6, #22d3ee);
+        color: #fff;
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        font-weight: 600;
+      }
+
+      .dash-nav {
+        display: grid;
+        gap: 8px;
+        margin-top: 14px;
+      }
+
+      .dash-nav-item {
+        padding: 12px 14px;
+        border-radius: 12px;
+        font-size: 14px;
+        color: #374151;
+      }
+
+      .dash-nav-item.active {
+        background: #eff6ff;
+        color: #1d4ed8;
+        border: 1px solid #bfdbfe;
+      }
+
+      .dash-main {
+        background: #f8fafc;
+      }
+
+      .dash-top {
+        height: 64px;
+        border-bottom: 1px solid #e5e7eb;
+        background: #fff;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        padding: 0 16px;
+      }
+
+      .dash-content {
+        padding: 16px;
+        display: grid;
+        gap: 14px;
+      }
+
+      .dash-cards {
+        display: grid;
+        grid-template-columns: repeat(3, minmax(0, 1fr));
+        gap: 12px;
+      }
+
+      .dash-card,
+      .dash-panel {
+        background: #fff;
+        border-radius: 12px;
+        box-shadow: 0 1px 3px rgba(15, 23, 42, 0.1);
+        padding: 16px;
+      }
+
+      .dash-card small,
+      .dash-panel small {
+        color: #6b7280;
+      }
+
+      .dash-card strong {
+        display: block;
+        margin-top: 8px;
+        font-size: 24px;
+      }
+
+      .dash-status {
+        display: grid;
+        grid-template-columns: repeat(3, minmax(0, 1fr));
+        gap: 12px;
+      }
+
+      .dash-mini {
+        background: #fff;
+        border-radius: 12px;
+        padding: 14px;
+      }
+
+      .shot-caption {
+        padding: 14px 18px 18px;
+        background: #fff;
+        border-top: 1px solid #e5e7eb;
+      }
+
+      .shot-caption p {
+        margin-top: 6px;
+        color: var(--muted);
+        line-height: 1.55;
+      }
+
+      @media (max-width: 1080px) {
+        .hero,
+        .hero-side,
+        .grid-3,
+        .grid-2,
+        .screenshot-grid,
+        .dash-cards,
+        .dash-status {
+          grid-template-columns: 1fr;
+        }
+      }
+
+      @media (max-width: 980px) {
+        .hero,
+        .shot-dashboard {
+          grid-template-columns: 1fr;
+        }
+
+        .section-header {
+          flex-direction: column;
+          align-items: start;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <div class="page">
+      <section class="hero">
+        <div class="hero-copy">
+          <p class="eyebrow">Case Study</p>
+          <h1>Earnstrack</h1>
+          <p>
+            Earnstrack is a full-stack transaction tracker for e-wallet and
+            printing-service operations. The project combines a React and
+            TypeScript frontend with an ASP.NET Core backend, JWT
+            authentication, role-based access control, service fee management,
+            CSV export, and PostgreSQL persistence.
+          </p>
+        </div>
+        <div class="hero-side">
+          <div class="metric">
+            <span>Frontend</span>
+            <strong>React + TypeScript</strong>
+          </div>
+          <div class="metric">
+            <span>Backend</span>
+            <strong>ASP.NET Core API</strong>
+          </div>
+          <div class="metric">
+            <span>Database</span>
+            <strong>PostgreSQL</strong>
+          </div>
+        </div>
+      </section>
+
+      <section class="section">
+        <div class="section-header">
+          <div>
+            <p class="eyebrow">Screens</p>
+            <h2>UI panels based on the current app</h2>
+          </div>
+          <p>
+            The repository does not include exported screenshot image files, so
+            these panels recreate the current login, dashboard, and settings
+            views from the live app’s actual structure, wording, spacing, and
+            assets.
+          </p>
+        </div>
+        <div class="screenshot-grid">
+          <article class="shot">
+            <div class="shot-bar">
+              <div class="shot-dot"></div>
+              <div class="shot-dot"></div>
+              <div class="shot-dot"></div>
+            </div>
+            <div class="shot-body shot-login">
+              <div class="login-mock">
+                <img
+                  src="assets/earnstrack-mark.svg"
+                  alt="Earnstrack logo"
+                  class="login-mock-logo"
+                />
+                <h3>Earnstrack</h3>
+                <p>Track and manage your business earnings</p>
+                <div class="mock-field">
+                  <span>Email Address</span>
+                  <div class="mock-input">admin@earnstrack.demo</div>
+                </div>
+                <div class="mock-field">
+                  <span>Password</span>
+                  <div class="mock-input">demo123</div>
+                </div>
+                <div class="mock-button">Sign In</div>
+              </div>
+            </div>
+            <div class="shot-caption">
+              <h3>Login screen</h3>
+              <p>
+                Mirrors the actual BasicLoginPage wording, gradient background,
+                logo treatment, and centered card structure from the React app.
+              </p>
+            </div>
+          </article>
+
+          <article class="shot">
+            <div class="shot-bar">
+              <div class="shot-dot"></div>
+              <div class="shot-dot"></div>
+              <div class="shot-dot"></div>
+            </div>
+            <div class="shot-body">
+              <div class="shot-dashboard">
+                <aside class="dash-sidebar">
+                  <img
+                    src="assets/earnstrack-mark.svg"
+                    alt="Earnstrack mark"
+                    style="width: 38px; height: 38px"
+                  />
+                  <div class="dash-profile">
+                    <div class="dash-avatar">AM</div>
+                    <div>
+                      <strong style="display: block; font-size: 14px"
+                        >Admin Manager</strong
+                      >
+                      <small>admin@earnstrack.demo</small>
+                    </div>
+                  </div>
+                  <div class="dash-nav">
+                    <div class="dash-nav-item active">Dashboard</div>
+                    <div class="dash-nav-item">E-Wallet</div>
+                    <div class="dash-nav-item">Printing</div>
+                    <div class="dash-nav-item">Products</div>
+                    <div class="dash-nav-item">Settings</div>
+                  </div>
+                </aside>
+                <div class="dash-main">
+                  <div class="dash-top">
+                    <div style="display: flex; align-items: center; gap: 12px">
+                      <img
+                        src="assets/earnstrack-mark.svg"
+                        alt="Earnstrack mark"
+                        style="width: 28px; height: 28px"
+                      />
+                      <strong style="font-size: 24px">Earnstrack</strong>
+                    </div>
+                    <div
+                      class="dash-avatar"
+                      style="width: 32px; height: 32px; font-size: 12px"
+                    >
+                      AM
+                    </div>
+                  </div>
+                  <div class="dash-content">
+                    <div class="dash-cards">
+                      <div class="dash-card">
+                        <small>Daily</small><strong>&#8369;7,450.00</strong>
+                      </div>
+                      <div class="dash-card">
+                        <small>Weekly</small><strong>&#8369;28,300.00</strong>
+                      </div>
+                      <div class="dash-card">
+                        <small>Monthly</small><strong>&#8369;109,900.00</strong>
+                      </div>
+                    </div>
+                    <div class="dash-status">
+                      <div class="dash-mini">
+                        <small>Pending Transactions</small
+                        ><strong
+                          style="
+                            display: block;
+                            margin-top: 8px;
+                            color: #a16207;
+                          "
+                          >6</strong
+                        >
+                      </div>
+                      <div class="dash-mini">
+                        <small>Completed Transactions</small
+                        ><strong
+                          style="
+                            display: block;
+                            margin-top: 8px;
+                            color: #15803d;
+                          "
+                          >39</strong
+                        >
+                      </div>
+                      <div class="dash-mini">
+                        <small>Failed Transactions</small
+                        ><strong
+                          style="
+                            display: block;
+                            margin-top: 8px;
+                            color: #b91c1c;
+                          "
+                          >2</strong
+                        >
+                      </div>
+                    </div>
+                    <div class="dash-panel">
+                      <small>Recent Transactions</small>
+                      <div style="height: 12px"></div>
+                      <div
+                        style="
+                          height: 10px;
+                          border-radius: 999px;
+                          background: #e5e7eb;
+                          margin-bottom: 10px;
+                        "
+                      ></div>
+                      <div
+                        style="
+                          height: 10px;
+                          border-radius: 999px;
+                          background: #e5e7eb;
+                          margin-bottom: 10px;
+                          width: 88%;
+                        "
+                      ></div>
+                      <div
+                        style="
+                          height: 10px;
+                          border-radius: 999px;
+                          background: #e5e7eb;
+                          width: 74%;
+                        "
+                      ></div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="shot-caption">
+              <h3>Dashboard shell</h3>
+              <p>
+                Recreates the current sidebar, top navigation, summary cards,
+                status cards, and recent-transactions area used in the main app.
+              </p>
+            </div>
+          </article>
+
+          <article class="shot">
+            <div class="shot-bar">
+              <div class="shot-dot"></div>
+              <div class="shot-dot"></div>
+              <div class="shot-dot"></div>
+            </div>
+            <div class="shot-body">
+              <div
+                style="
+                  background: #fff;
+                  border: 1px solid #e5e7eb;
+                  border-radius: 14px;
+                  padding: 18px;
+                  display: grid;
+                  gap: 16px;
+                  min-height: 310px;
+                "
+              >
+                <div style="font-size: 30px; font-weight: 700; color: #111827">
+                  Settings
+                </div>
+                <div style="display: flex; gap: 8px; flex-wrap: wrap">
+                  <div
+                    style="
+                      padding: 8px 16px;
+                      border-radius: 8px;
+                      background: #2563eb;
+                      color: #fff;
+                      font-weight: 500;
+                    "
+                  >
+                    Appearance
+                  </div>
+                  <div
+                    style="
+                      padding: 8px 16px;
+                      border-radius: 8px;
+                      background: #e5e7eb;
+                      color: #111827;
+                      font-weight: 500;
+                    "
+                  >
+                    Service Fees
+                  </div>
+                  <div
+                    style="
+                      padding: 8px 16px;
+                      border-radius: 8px;
+                      background: #e5e7eb;
+                      color: #111827;
+                      font-weight: 500;
+                    "
+                  >
+                    User Management
+                  </div>
+                </div>
+                <div
+                  style="
+                    display: grid;
+                    gap: 14px;
+                    grid-template-columns: repeat(2, minmax(0, 1fr));
+                  "
+                >
+                  <div
+                    style="
+                      border-radius: 12px;
+                      box-shadow: 0 1px 3px rgba(15, 23, 42, 0.1);
+                      padding: 18px;
+                      background: #fff;
+                    "
+                  >
+                    <div
+                      style="
+                        font-size: 18px;
+                        font-weight: 600;
+                        margin-bottom: 12px;
+                      "
+                    >
+                      Appearance Settings
+                    </div>
+                    <div
+                      style="
+                        border: 1px solid #e5e7eb;
+                        border-radius: 16px;
+                        background: #f9fafb;
+                        padding: 16px;
+                        display: flex;
+                        gap: 14px;
+                        align-items: center;
+                      "
+                    >
+                      <div
+                        style="
+                          width: 54px;
+                          height: 54px;
+                          border-radius: 999px;
+                          background: linear-gradient(
+                            to bottom right,
+                            #3b82f6,
+                            #22d3ee
+                          );
+                          color: #fff;
+                          display: inline-flex;
+                          align-items: center;
+                          justify-content: center;
+                          font-weight: 600;
+                        "
+                      >
+                        AM
+                      </div>
+                      <div>
+                        <div style="font-weight: 600; color: #111827">
+                          Profile Avatar
+                        </div>
+                        <div
+                          style="
+                            margin-top: 4px;
+                            color: #6b7280;
+                            font-size: 14px;
+                          "
+                        >
+                          Upload a custom avatar to personalize your account.
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                  <div
+                    style="
+                      border-radius: 12px;
+                      box-shadow: 0 1px 3px rgba(15, 23, 42, 0.1);
+                      padding: 18px;
+                      background: #fff;
+                    "
+                  >
+                    <div
+                      style="
+                        font-size: 18px;
+                        font-weight: 600;
+                        margin-bottom: 12px;
+                      "
+                    >
+                      Data Export
+                    </div>
+                    <div style="color: #6b7280; line-height: 1.55">
+                      Export all your transaction history as CSV for backup or
+                      analysis.
+                    </div>
+                    <div
+                      style="
+                        margin-top: 16px;
+                        display: inline-flex;
+                        align-items: center;
+                        justify-content: center;
+                        min-height: 40px;
+                        padding: 0 16px;
+                        border-radius: 8px;
+                        background: #2563eb;
+                        color: #fff;
+                        font-weight: 600;
+                      "
+                    >
+                      Export Transactions
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="shot-caption">
+              <h3>Settings view</h3>
+              <p>
+                Reflects the SettingsPage structure with tab navigation,
+                appearance controls, avatar management, and transaction export.
+              </p>
+            </div>
+          </article>
+        </div>
+      </section>
+
+      <section class="section">
+        <div class="section-header">
+          <div>
+            <p class="eyebrow">Problem</p>
+            <h2>What the app is solving</h2>
+          </div>
+          <p>
+            Small service-based businesses often manage e-wallet, printing, and
+            seller activity across separate notes or spreadsheets. That makes it
+            harder to track totals, standardize service charges, and review work
+            by period or operator.
+          </p>
+        </div>
+        <div class="grid-3">
+          <div class="feature panel">
+            <h3>Scattered records</h3>
+            <p>
+              Manual tracking creates inconsistency across transaction types and
+              reporting periods.
+            </p>
+          </div>
+          <div class="feature panel">
+            <h3>Fee management</h3>
+            <p>
+              Service charges need to be configurable without rewriting the app
+              for every pricing change.
+            </p>
+          </div>
+          <div class="feature panel">
+            <h3>Role-based usage</h3>
+            <p>
+              Admins and sellers need different levels of visibility and control
+              inside the same product.
+            </p>
+          </div>
+        </div>
+      </section>
+
+      <section class="section">
+        <div class="section-header">
+          <div>
+            <p class="eyebrow">Solution</p>
+            <h2>How Earnstrack responds</h2>
+          </div>
+          <p>
+            The app centralizes transaction entry, dashboard reporting, service
+            fee configuration, authentication, and export workflows in one
+            responsive interface.
+          </p>
+        </div>
+        <div class="grid-2">
+          <div class="step panel">
+            <h3>1. Sign in and protect routes</h3>
+            <p>
+              Users authenticate with email and password, then the frontend
+              stores the session and guards routes for authenticated access.
+            </p>
+          </div>
+          <div class="step panel">
+            <h3>2. Record transactions by service</h3>
+            <p>
+              Separate forms support E-Wallet and Printing workflows while still
+              feeding a single reporting model.
+            </p>
+          </div>
+          <div class="step panel">
+            <h3>3. Review dashboard totals</h3>
+            <p>
+              The dashboard summarizes daily, weekly, and monthly totals along
+              with recent transactions and status breakdowns.
+            </p>
+          </div>
+          <div class="step panel">
+            <h3>4. Admin configuration</h3>
+            <p>
+              Settings provide appearance control, service fee management, user
+              administration, and transaction export.
+            </p>
+          </div>
+        </div>
+      </section>
+
+      <section class="section">
+        <div class="section-header">
+          <div>
+            <p class="eyebrow">Stack</p>
+            <h2>Project architecture</h2>
+          </div>
+          <p>
+            The codebase is organized in clear layers so frontend concerns,
+            backend business logic, and persistence remain separate and easier
+            to evolve.
+          </p>
+        </div>
+        <div class="grid-3">
+          <div class="stack panel">
+            <h3>Frontend</h3>
+            <div class="list">
+              <div>React 18 with TypeScript</div>
+              <div>React Router and Zustand stores</div>
+              <div>Tailwind CSS styling</div>
+              <div>Feature-organized components</div>
+            </div>
+          </div>
+          <div class="stack panel">
+            <h3>Backend</h3>
+            <div class="list">
+              <div>ASP.NET Core controllers</div>
+              <div>Service layer for business logic</div>
+              <div>JWT authentication</div>
+              <div>DTO-based request and response shapes</div>
+            </div>
+          </div>
+          <div class="stack panel">
+            <h3>Data</h3>
+            <div class="list">
+              <div>Entity Framework Core</div>
+              <div>PostgreSQL or Supabase Postgres</div>
+              <div>Migrations for schema changes</div>
+              <div>Audit and transaction entities</div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section class="section">
+        <div class="section-header">
+          <div>
+            <p class="eyebrow">Highlights</p>
+            <h2>Portfolio talking points</h2>
+          </div>
+          <p>
+            These are the strongest points to emphasize when presenting the
+            project to recruiters, clients, or collaborators.
+          </p>
+        </div>
+        <div class="grid-2">
+          <div class="summary panel">
+            <h3>Operational focus</h3>
+            <p>
+              The project is not just a landing page or admin shell. It models
+              concrete business workflows for e-wallet and printing services.
+            </p>
+          </div>
+          <div class="summary panel">
+            <h3>Full-stack delivery</h3>
+            <p>
+              The app spans UI, API, database schema, authentication, and test
+              coverage instead of stopping at frontend visuals.
+            </p>
+          </div>
+          <div class="summary panel">
+            <h3>Role-aware design</h3>
+            <p>
+              Admin-only actions such as user management and settings help show
+              that the product accounts for different user responsibilities.
+            </p>
+          </div>
+          <div class="summary panel">
+            <h3>Room to grow</h3>
+            <p>
+              The existing structure leaves space for features like inventory,
+              richer reporting, and more service categories.
+            </p>
+          </div>
+        </div>
+      </section>
+    </div>
+  </body>
+</html>

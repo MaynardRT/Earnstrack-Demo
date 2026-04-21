@@ -1,0 +1,1670 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Earnstrack Demo</title>
+    <style>
+      :root {
+        --bg: #ffffff;
+        --body-bg: #f8fafc;
+        --surface: #ffffff;
+        --surface-soft: #f9fafb;
+        --surface-strong: #f3f4f6;
+        --text: #111827;
+        --muted: #6b7280;
+        --line: #e5e7eb;
+        --brand: #2563eb;
+        --brand-hover: #1d4ed8;
+        --brand-soft: #eff6ff;
+        --danger-bg: #fef2f2;
+        --danger-line: #fecaca;
+        --danger-text: #991b1b;
+        --success-bg: #f0fdf4;
+        --success-line: #bbf7d0;
+        --success-text: #166534;
+        --sidebar-width: 16rem;
+      }
+
+      * {
+        box-sizing: border-box;
+      }
+
+      html,
+      body {
+        margin: 0;
+        min-height: 100%;
+      }
+
+      body {
+        background: var(--body-bg);
+        color: var(--text);
+        font-family:
+          -apple-system, BlinkMacSystemFont, "Segoe UI", "Roboto",
+          "Helvetica Neue", sans-serif;
+      }
+
+      body.dark {
+        --bg: #111827;
+        --body-bg: #111827;
+        --surface: #1f2937;
+        --surface-soft: #111827;
+        --surface-strong: #374151;
+        --text: #ffffff;
+        --muted: #9ca3af;
+        --line: #374151;
+        --brand-soft: rgba(37, 99, 235, 0.22);
+        --danger-bg: rgba(127, 29, 29, 0.22);
+        --danger-line: #7f1d1d;
+        --danger-text: #fecaca;
+        --success-bg: rgba(20, 83, 45, 0.22);
+        --success-line: #166534;
+        --success-text: #bbf7d0;
+      }
+
+      img {
+        display: block;
+        max-width: 100%;
+      }
+
+      button,
+      input,
+      select {
+        font: inherit;
+      }
+
+      button {
+        cursor: pointer;
+      }
+
+      .hidden {
+        display: none !important;
+      }
+
+      .logo-full {
+        height: 5rem;
+        width: auto;
+      }
+
+      .logo-mark {
+        height: 2.25rem;
+        width: 2.25rem;
+        border-radius: 0.75rem;
+      }
+
+      .login-screen {
+        min-height: 100vh;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        padding: 1rem;
+        background: linear-gradient(to bottom right, #eff6ff, #e0e7ff);
+      }
+
+      body.dark .login-screen {
+        background: linear-gradient(to bottom right, #111827, #1f2937);
+      }
+
+      .login-stack {
+        width: min(1120px, 100%);
+        display: grid;
+        grid-template-columns: 1.1fr minmax(0, 420px);
+        gap: 1.5rem;
+      }
+
+      .card,
+      .panel,
+      .table-card,
+      .stat-card,
+      .status-card,
+      .promo-card,
+      .login-card {
+        background: var(--surface);
+        border-radius: 0.75rem;
+        box-shadow:
+          0 1px 3px rgba(15, 23, 42, 0.1),
+          0 1px 2px rgba(15, 23, 42, 0.06);
+      }
+
+      .promo-card,
+      .login-card,
+      .card,
+      .table-card,
+      .stat-card,
+      .status-card {
+        padding: 1.5rem;
+      }
+
+      .promo-card {
+        display: grid;
+        gap: 1.5rem;
+      }
+
+      .eyebrow {
+        margin: 0 0 0.5rem;
+        color: var(--brand);
+        font-size: 0.75rem;
+        font-weight: 700;
+        letter-spacing: 0.08em;
+        text-transform: uppercase;
+      }
+
+      h1,
+      h2,
+      h3,
+      h4,
+      p {
+        margin: 0;
+      }
+
+      .promo-card h1 {
+        font-size: clamp(2rem, 4vw, 3.25rem);
+        line-height: 1.05;
+        color: var(--text);
+      }
+
+      .text-muted {
+        color: var(--muted);
+        line-height: 1.6;
+      }
+
+      .preview-grid,
+      .account-list,
+      .stats-grid,
+      .status-grid,
+      .double-grid {
+        display: grid;
+        gap: 1rem;
+      }
+
+      .preview-grid,
+      .stats-grid,
+      .status-grid {
+        grid-template-columns: repeat(3, minmax(0, 1fr));
+      }
+
+      .double-grid,
+      .account-list {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+      }
+
+      .surface-soft {
+        border: 1px solid var(--line);
+        border-radius: 0.75rem;
+        background: var(--surface-soft);
+        padding: 1rem;
+      }
+
+      .surface-soft strong {
+        display: block;
+        margin-top: 0.5rem;
+      }
+
+      .account-box {
+        display: flex;
+        flex-direction: column;
+        gap: 0.35rem;
+      }
+
+      .role-tag {
+        align-self: start;
+        padding: 0.35rem 0.6rem;
+        border-radius: 999px;
+        background: var(--brand-soft);
+        color: var(--brand);
+        font-size: 0.75rem;
+        font-weight: 700;
+      }
+
+      .login-card {
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+      }
+
+      .brand-block {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        text-align: center;
+        margin-bottom: 2rem;
+      }
+
+      .brand-block h2 {
+        margin-top: 1rem;
+        font-size: 1.875rem;
+        font-weight: 700;
+      }
+
+      .brand-block p {
+        margin-top: 0.5rem;
+        color: var(--muted);
+      }
+
+      .alert {
+        border: 1px solid;
+        border-radius: 0.5rem;
+        padding: 1rem;
+        display: flex;
+        align-items: start;
+        gap: 0.75rem;
+        margin-bottom: 1rem;
+      }
+
+      .alert-error {
+        background: var(--danger-bg);
+        border-color: var(--danger-line);
+        color: var(--danger-text);
+      }
+
+      .alert-success {
+        background: var(--success-bg);
+        border-color: var(--success-line);
+        color: var(--success-text);
+      }
+
+      .field {
+        margin-bottom: 1rem;
+      }
+
+      .field label {
+        display: block;
+        margin-bottom: 0.5rem;
+        font-size: 0.875rem;
+        font-weight: 500;
+      }
+
+      .field input,
+      .field select {
+        width: 100%;
+        padding: 0.5rem 1rem;
+        border: 1px solid #d1d5db;
+        border-radius: 0.5rem;
+        background: var(--surface);
+        color: var(--text);
+      }
+
+      body.dark .field input,
+      body.dark .field select {
+        border-color: #4b5563;
+      }
+
+      body.dark .card,
+      body.dark .panel,
+      body.dark .table-card,
+      body.dark .stat-card,
+      body.dark .status-card,
+      body.dark .promo-card,
+      body.dark .login-card,
+      body.dark .topnav,
+      body.dark .sidebar {
+        box-shadow: none;
+      }
+
+      .field input:focus,
+      .field select:focus {
+        outline: none;
+        box-shadow: 0 0 0 2px rgba(59, 130, 246, 0.45);
+        border-color: var(--brand);
+      }
+
+      .button-row,
+      .top-actions,
+      .radio-group,
+      .pill-row,
+      .tab-row {
+        display: flex;
+        gap: 0.75rem;
+        flex-wrap: wrap;
+      }
+
+      .button {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        gap: 0.5rem;
+        font-weight: 500;
+        border-radius: 0.5rem;
+        transition: background-color 0.2s ease;
+      }
+
+      .button-md {
+        padding: 0.5rem 1rem;
+        min-height: 2.5rem;
+      }
+
+      .button-lg {
+        width: 100%;
+        padding: 0.75rem 1.5rem;
+        min-height: 3rem;
+        font-size: 1.125rem;
+      }
+
+      .button-primary {
+        border: 0;
+        background: #2563eb;
+        color: #fff;
+      }
+
+      .button-primary:hover {
+        background: #1d4ed8;
+      }
+
+      .button-secondary {
+        border: 0;
+        background: #e5e7eb;
+        color: #111827;
+      }
+
+      body.dark .button-secondary {
+        background: #374151;
+        color: #fff;
+      }
+
+      .helper {
+        margin-top: 0.75rem;
+        font-size: 0.875rem;
+        color: var(--muted);
+      }
+
+      .app-shell {
+        min-height: 100vh;
+        display: flex;
+        background: var(--body-bg);
+      }
+
+      .mobile-overlay {
+        position: fixed;
+        inset: 0;
+        z-index: 30;
+        background: rgba(0, 0, 0, 0.5);
+      }
+
+      .sidebar {
+        position: fixed;
+        inset: 0 auto 0 0;
+        z-index: 40;
+        width: var(--sidebar-width);
+        border-right: 1px solid var(--line);
+        background: var(--surface);
+        box-shadow: 0 20px 45px rgba(15, 23, 42, 0.2);
+        transform: translateX(-100%);
+        transition: transform 0.3s ease-in-out;
+        padding: 1rem;
+        display: flex;
+        flex-direction: column;
+      }
+
+      .sidebar.open {
+        transform: translateX(0);
+      }
+
+      .sidebar-header {
+        padding-bottom: 1rem;
+        border-bottom: 1px solid var(--line);
+      }
+
+      .sidebar-header-row {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+      }
+
+      .sidebar-title {
+        font-size: 1.125rem;
+        font-weight: 600;
+      }
+
+      .icon-button {
+        width: 2.5rem;
+        height: 2.5rem;
+        border: 0;
+        border-radius: 0.5rem;
+        background: transparent;
+        color: var(--text);
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+      }
+
+      .icon-button:hover {
+        background: var(--surface-strong);
+      }
+
+      .profile-card {
+        display: flex;
+        align-items: center;
+        gap: 0.75rem;
+        margin-top: 1rem;
+        padding: 0.75rem;
+        border-radius: 1rem;
+        background: #f9fafb;
+      }
+
+      body.dark .profile-card {
+        background: rgba(55, 65, 81, 0.6);
+      }
+
+      .avatar {
+        width: 2.5rem;
+        height: 2.5rem;
+        border-radius: 999px;
+        overflow: hidden;
+        border: 1px solid #e5e7eb;
+        background: linear-gradient(to bottom right, #3b82f6, #22d3ee);
+        color: #fff;
+        font-weight: 600;
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        box-shadow: 0 1px 2px rgba(15, 23, 42, 0.12);
+      }
+
+      body.dark .avatar {
+        border-color: #374151;
+      }
+
+      .profile-copy strong {
+        display: block;
+        margin-bottom: 0.25rem;
+        font-size: 0.875rem;
+      }
+
+      .profile-copy span {
+        font-size: 0.75rem;
+        color: var(--muted);
+      }
+
+      .nav-group {
+        display: grid;
+        gap: 0.5rem;
+        padding-top: 1rem;
+        overflow-y: auto;
+      }
+
+      .nav-button {
+        display: flex;
+        align-items: center;
+        gap: 0.75rem;
+        width: 100%;
+        padding: 0.75rem 1rem;
+        text-align: left;
+        border: 1px solid transparent;
+        border-radius: 0.75rem;
+        background: transparent;
+        color: #374151;
+        font-size: 0.875rem;
+        font-weight: 500;
+        transition: all 0.2s ease;
+      }
+
+      body.dark .nav-button {
+        color: #e5e7eb;
+      }
+
+      .nav-button.active {
+        border-color: #bfdbfe;
+        background: #eff6ff;
+        color: #1d4ed8;
+        box-shadow: 0 1px 2px rgba(59, 130, 246, 0.12);
+      }
+
+      body.dark .nav-button.active {
+        border-color: #1e3a8a;
+        background: rgba(30, 64, 175, 0.26);
+        color: #93c5fd;
+      }
+
+      .sidebar-actions {
+        margin-top: auto;
+        padding-top: 1rem;
+        border-top: 1px solid var(--line);
+        display: grid;
+        gap: 0.75rem;
+      }
+
+      .layout-root {
+        display: flex;
+        flex: 1;
+        min-width: 0;
+        flex-direction: column;
+      }
+
+      .topnav {
+        position: sticky;
+        top: 0;
+        z-index: 20;
+        border-bottom: 1px solid var(--line);
+        background: var(--surface);
+        box-shadow: 0 1px 3px rgba(15, 23, 42, 0.08);
+      }
+
+      .topnav-inner {
+        max-width: 80rem;
+        margin: 0 auto;
+        padding: 0 1rem;
+      }
+
+      .topnav-row {
+        min-height: 4rem;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+      }
+
+      .brand-inline {
+        display: flex;
+        align-items: center;
+        gap: 0.75rem;
+      }
+
+      .brand-name {
+        font-size: 1.5rem;
+        font-weight: 700;
+      }
+
+      .page-content {
+        max-width: 80rem;
+        width: 100%;
+        margin: 0 auto;
+        padding: 1rem 1rem 2rem;
+      }
+
+      .page-section {
+        display: grid;
+        gap: 1.5rem;
+      }
+
+      .page-title {
+        font-size: 1.875rem;
+        font-weight: 700;
+      }
+
+      .stats-grid {
+        grid-template-columns: repeat(1, minmax(0, 1fr));
+      }
+
+      .stat-card {
+        text-align: center;
+      }
+
+      .stat-icon {
+        display: flex;
+        justify-content: center;
+        margin-bottom: 0.5rem;
+      }
+
+      .stat-label,
+      .muted,
+      .table-subtle,
+      .card-subtle {
+        color: var(--muted);
+      }
+
+      .stat-value {
+        font-size: 1.875rem;
+        font-weight: 700;
+        color: var(--text);
+      }
+
+      .status-card {
+        border: 1px solid var(--line);
+      }
+
+      .status-card strong {
+        display: block;
+        margin-top: 0.5rem;
+        font-size: 1.5rem;
+      }
+
+      .status-card.pending strong {
+        color: #a16207;
+      }
+
+      .status-card.completed strong {
+        color: #15803d;
+      }
+
+      .status-card.failed strong {
+        color: #b91c1c;
+      }
+
+      .card-title {
+        font-size: 1.125rem;
+        font-weight: 600;
+        margin-bottom: 1rem;
+      }
+
+      .table-wrapper {
+        overflow-x: auto;
+      }
+
+      table {
+        width: 100%;
+        border-collapse: collapse;
+      }
+
+      th,
+      td {
+        padding: 0.75rem 1rem;
+        border-bottom: 1px solid var(--line);
+        text-align: left;
+      }
+
+      th {
+        font-size: 0.875rem;
+        font-weight: 600;
+      }
+
+      .badge {
+        display: inline-block;
+        padding: 0.25rem 0.75rem;
+        border-radius: 999px;
+        font-size: 0.75rem;
+        font-weight: 500;
+      }
+
+      .badge-completed {
+        background: #dcfce7;
+        color: #166534;
+      }
+
+      .badge-pending {
+        background: #fef3c7;
+        color: #92400e;
+      }
+
+      .badge-failed {
+        background: #fee2e2;
+        color: #991b1b;
+      }
+
+      body.dark .badge-completed {
+        background: rgba(20, 83, 45, 0.35);
+        color: #bbf7d0;
+      }
+
+      body.dark .badge-pending {
+        background: rgba(146, 64, 14, 0.35);
+        color: #fde68a;
+      }
+
+      body.dark .badge-failed {
+        background: rgba(127, 29, 29, 0.35);
+        color: #fecaca;
+      }
+
+      body.dark .table-wrapper table tr:hover {
+        background: rgba(55, 65, 81, 0.5);
+      }
+
+      .icon {
+        width: 1.25rem;
+        height: 1.25rem;
+        display: inline-flex;
+      }
+
+      .icon svg {
+        width: 100%;
+        height: 100%;
+        stroke: currentColor;
+        fill: none;
+        stroke-width: 2;
+        stroke-linecap: round;
+        stroke-linejoin: round;
+      }
+
+      .icon-blue {
+        color: #2563eb;
+      }
+
+      .icon-green {
+        color: #16a34a;
+      }
+
+      .icon-purple {
+        color: #7c3aed;
+      }
+
+      .coming-soon {
+        min-height: 18rem;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        text-align: center;
+      }
+
+      .coming-soon .icon {
+        width: 3rem;
+        height: 3rem;
+        color: #9ca3af;
+        margin-bottom: 1rem;
+      }
+
+      .fieldset {
+        display: grid;
+        gap: 1.5rem;
+      }
+
+      .info-panel {
+        padding: 1rem;
+        border-radius: 0.5rem;
+        background: rgba(37, 99, 235, 0.08);
+      }
+
+      body.dark .info-panel {
+        background: rgba(37, 99, 235, 0.18);
+      }
+
+      .settings-tab-row {
+        display: flex;
+        gap: 0.5rem;
+        flex-wrap: wrap;
+      }
+
+      .settings-tab {
+        padding: 0.5rem 1rem;
+        border: 0;
+        border-radius: 0.5rem;
+        font-weight: 500;
+        background: #e5e7eb;
+        color: #111827;
+      }
+
+      .settings-tab.active {
+        background: #2563eb;
+        color: #fff;
+      }
+
+      body.dark .settings-tab {
+        background: #374151;
+        color: #fff;
+      }
+
+      @media (min-width: 768px) {
+        .app-shell {
+          display: grid;
+          grid-template-columns: var(--sidebar-width) minmax(0, 1fr);
+        }
+
+        .sidebar {
+          position: sticky;
+          top: 0;
+          transform: none !important;
+          height: 100vh;
+          box-shadow: none;
+        }
+
+        .mobile-only {
+          display: none !important;
+        }
+      }
+
+      @media (min-width: 1024px) {
+        .stats-grid,
+        .status-grid,
+        .double-grid,
+        .preview-grid,
+        .account-list {
+          grid-template-columns: repeat(3, minmax(0, 1fr));
+        }
+
+        .double-grid,
+        .account-list {
+          grid-template-columns: repeat(2, minmax(0, 1fr));
+        }
+      }
+
+      @media (max-width: 1024px) {
+        .login-stack,
+        .preview-grid,
+        .account-list,
+        .status-grid,
+        .double-grid {
+          grid-template-columns: 1fr;
+        }
+      }
+
+      @media (max-width: 767px) {
+        .promo-card,
+        .login-card,
+        .card,
+        .table-card,
+        .stat-card,
+        .status-card {
+          padding: 1.125rem;
+        }
+
+        .topnav-row {
+          gap: 0.75rem;
+        }
+
+        .brand-name {
+          font-size: 1.25rem;
+        }
+
+        th:nth-child(4),
+        td:nth-child(4),
+        th:nth-child(5),
+        td:nth-child(5) {
+          display: none;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <section class="login-screen" id="login-screen">
+      <div class="login-stack">
+        <article class="promo-card">
+          <div>
+            <p class="eyebrow">Standalone Demo Clone</p>
+            <h1>Track and manage your business earnings</h1>
+            <p class="text-muted" style="margin-top: 1rem; max-width: 60ch">
+              This standalone file mirrors the current React app more closely:
+              the login screen, sidebar shell, card spacing, stat cards,
+              transaction tables, Products placeholder, and Settings wording all
+              follow the existing frontend structure.
+            </p>
+          </div>
+
+          <div class="preview-grid">
+            <div class="surface-soft">
+              <span class="text-muted">Views</span>
+              <strong>Dashboard + Services</strong>
+              <p class="text-muted">
+                Login, E-Wallet, Printing, Products, Settings.
+              </p>
+            </div>
+            <div class="surface-soft">
+              <span class="text-muted">Roles</span>
+              <strong>Admin and Seller</strong>
+              <p class="text-muted">
+                Seller navigation is intentionally limited.
+              </p>
+            </div>
+            <div class="surface-soft">
+              <span class="text-muted">Responsive</span>
+              <strong>Mobile Sidebar</strong>
+              <p class="text-muted">
+                Menu button, overlay, and slide-in navigation.
+              </p>
+            </div>
+          </div>
+
+          <div class="account-list">
+            <div class="surface-soft account-box">
+              <div class="role-tag">Admin</div>
+              <strong>Admin Demo Account</strong>
+              <span class="text-muted">Email: admin@earnstrack.demo</span>
+              <span class="text-muted">Password: demo123</span>
+            </div>
+            <div class="surface-soft account-box">
+              <div class="role-tag">Seller</div>
+              <strong>Seller Demo Account</strong>
+              <span class="text-muted">Email: seller@earnstrack.demo</span>
+              <span class="text-muted">Password: seller123</span>
+            </div>
+          </div>
+        </article>
+
+        <article class="login-card">
+          <div class="brand-block">
+            <img
+              src="assets/earnstrack-mark.svg"
+              alt="Earnstrack logo"
+              class="logo-full"
+              style="height: 5rem"
+            />
+            <h2>Earnstrack</h2>
+            <p>Track and manage your business earnings</p>
+          </div>
+
+          <div id="login-error" class="alert alert-error hidden">
+            <div class="icon" aria-hidden="true">
+              <svg viewBox="0 0 24 24">
+                <circle cx="12" cy="12" r="10"></circle>
+                <line x1="12" y1="8" x2="12" y2="12"></line>
+                <line x1="12" y1="16" x2="12.01" y2="16"></line>
+              </svg>
+            </div>
+            <div>
+              <h4>Error</h4>
+              <p id="login-error-message"></p>
+            </div>
+          </div>
+
+          <form id="login-form">
+            <div class="field">
+              <label for="email">Email Address</label>
+              <input
+                id="email"
+                name="email"
+                type="email"
+                value="admin@earnstrack.demo"
+              />
+            </div>
+            <div class="field">
+              <label for="password">Password</label>
+              <input
+                id="password"
+                name="password"
+                type="password"
+                value="demo123"
+              />
+            </div>
+            <button class="button button-primary button-lg" type="submit">
+              Sign In
+            </button>
+            <div class="button-row" style="margin-top: 1rem">
+              <button
+                class="button button-secondary button-md"
+                id="fill-admin"
+                type="button"
+              >
+                Use Admin
+              </button>
+              <button
+                class="button button-secondary button-md"
+                id="fill-seller"
+                type="button"
+              >
+                Use Seller
+              </button>
+            </div>
+            <p class="helper">
+              Demo sessions are stored locally so refreshes do not reset the
+              walkthrough.
+            </p>
+          </form>
+        </article>
+      </div>
+    </section>
+
+    <section class="app-shell hidden" id="app-shell">
+      <div class="mobile-overlay hidden mobile-only" id="mobile-overlay"></div>
+
+      <aside class="sidebar" id="sidebar">
+        <div class="sidebar-header mobile-only">
+          <div class="sidebar-header-row">
+            <h2 class="sidebar-title">Menu</h2>
+            <button
+              class="icon-button"
+              id="close-sidebar"
+              type="button"
+              aria-label="Close menu"
+              title="Close menu"
+            >
+              <span class="icon"
+                ><svg viewBox="0 0 24 24">
+                  <line x1="18" y1="6" x2="6" y2="18"></line>
+                  <line x1="6" y1="6" x2="18" y2="18"></line></svg
+              ></span>
+            </button>
+          </div>
+        </div>
+
+        <div
+          class="sidebar-header"
+          style="padding-bottom: 1.5rem; border-bottom: none"
+        >
+          <div class="brand-inline">
+            <img
+              src="assets/earnstrack-mark.svg"
+              alt="Earnstrack mark"
+              class="logo-mark"
+            />
+            <strong style="font-size: 1.5rem">Earnstrack</strong>
+          </div>
+          <div class="profile-card">
+            <div class="avatar" id="sidebar-avatar">AM</div>
+            <div class="profile-copy">
+              <strong id="profile-name">Admin Manager</strong>
+              <span id="profile-email">admin@earnstrack.demo</span>
+            </div>
+          </div>
+        </div>
+
+        <nav class="nav-group" id="nav-group"></nav>
+
+        <div class="sidebar-actions">
+          <button
+            class="button button-secondary button-md"
+            id="logout-button"
+            type="button"
+          >
+            Logout
+          </button>
+        </div>
+      </aside>
+
+      <div class="layout-root">
+        <header class="topnav">
+          <div class="topnav-inner">
+            <div class="topnav-row">
+              <div class="brand-inline">
+                <button
+                  class="icon-button mobile-only"
+                  id="menu-button"
+                  type="button"
+                  aria-label="Toggle menu"
+                  title="Toggle menu"
+                >
+                  <span class="icon"
+                    ><svg viewBox="0 0 24 24">
+                      <line x1="3" y1="12" x2="21" y2="12"></line>
+                      <line x1="3" y1="6" x2="21" y2="6"></line>
+                      <line x1="3" y1="18" x2="21" y2="18"></line></svg
+                  ></span>
+                </button>
+                <img
+                  src="assets/earnstrack-mark.svg"
+                  alt="Earnstrack mark"
+                  class="logo-mark"
+                />
+                <div class="brand-name">Earnstrack</div>
+              </div>
+              <div class="top-actions">
+                <div class="avatar" id="header-avatar">AM</div>
+                <button
+                  class="icon-button"
+                  id="theme-toggle"
+                  type="button"
+                  aria-label="Toggle theme"
+                  title="Toggle theme"
+                >
+                  <span class="icon"
+                    ><svg viewBox="0 0 24 24">
+                      <path d="M12 2v2"></path>
+                      <path d="M12 20v2"></path>
+                      <path d="m4.93 4.93 1.41 1.41"></path>
+                      <path d="m17.66 17.66 1.41 1.41"></path>
+                      <path d="M2 12h2"></path>
+                      <path d="M20 12h2"></path>
+                      <path d="m6.34 17.66-1.41 1.41"></path>
+                      <path d="m19.07 4.93-1.41 1.41"></path>
+                      <circle cx="12" cy="12" r="4"></circle></svg
+                  ></span>
+                </button>
+              </div>
+            </div>
+          </div>
+        </header>
+
+        <main class="page-content">
+          <section class="page-section" data-section="dashboard">
+            <h1 class="page-title">Dashboard</h1>
+
+            <div class="card">
+              <div class="card-title">Earnings Summary</div>
+              <div class="stats-grid">
+                <div class="stat-card">
+                  <div class="stat-icon icon-blue">
+                    <span class="icon"
+                      ><svg viewBox="0 0 24 24">
+                        <rect x="3" y="6" width="18" height="12" rx="2"></rect>
+                        <path d="M3 10h18"></path></svg
+                    ></span>
+                  </div>
+                  <p class="stat-label">Daily</p>
+                  <p class="stat-value">&#8369;7,450.00</p>
+                </div>
+                <div class="stat-card">
+                  <div class="stat-icon icon-green">
+                    <span class="icon"
+                      ><svg viewBox="0 0 24 24">
+                        <polyline
+                          points="22 7 13.5 15.5 8.5 10.5 2 17"
+                        ></polyline>
+                        <polyline points="16 7 22 7 22 13"></polyline></svg
+                    ></span>
+                  </div>
+                  <p class="stat-label">Weekly</p>
+                  <p class="stat-value">&#8369;28,300.00</p>
+                </div>
+                <div class="stat-card">
+                  <div class="stat-icon icon-purple">
+                    <span class="icon"
+                      ><svg viewBox="0 0 24 24">
+                        <rect x="3" y="4" width="18" height="18" rx="2"></rect>
+                        <line x1="16" y1="2" x2="16" y2="6"></line>
+                        <line x1="8" y1="2" x2="8" y2="6"></line>
+                        <line x1="3" y1="10" x2="21" y2="10"></line></svg
+                    ></span>
+                  </div>
+                  <p class="stat-label">Monthly</p>
+                  <p class="stat-value">&#8369;109,900.00</p>
+                </div>
+              </div>
+
+              <div class="pill-row" style="margin-top: 1rem">
+                <button class="settings-tab active" type="button">daily</button>
+                <button class="settings-tab" type="button">weekly</button>
+                <button class="settings-tab" type="button">monthly</button>
+              </div>
+            </div>
+
+            <div class="status-grid">
+              <div class="status-card pending">
+                <p class="muted">Pending Transactions</p>
+                <strong>6</strong>
+                <p class="card-subtle">Total amount: &#8369;4,350.00</p>
+              </div>
+              <div class="status-card completed">
+                <p class="muted">Completed Transactions</p>
+                <strong>39</strong>
+                <p class="card-subtle">Total amount: &#8369;23,700.00</p>
+              </div>
+              <div class="status-card failed">
+                <p class="muted">Failed Transactions</p>
+                <strong>2</strong>
+                <p class="card-subtle">Total amount: &#8369;780.00</p>
+              </div>
+            </div>
+
+            <div class="table-card">
+              <div class="card-title">Recent Transactions</div>
+              <div class="table-wrapper">
+                <table>
+                  <thead>
+                    <tr>
+                      <th>Recorded By</th>
+                      <th>Type</th>
+                      <th>Amount</th>
+                      <th>Service Charge</th>
+                      <th>Total</th>
+                      <th>Status</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr>
+                      <td>Admin Manager</td>
+                      <td>EWallet</td>
+                      <td>&#8369;2,000.00</td>
+                      <td>&#8369;40.00</td>
+                      <td>&#8369;2,040.00</td>
+                      <td>
+                        <span class="badge badge-completed">Completed</span>
+                      </td>
+                    </tr>
+                    <tr>
+                      <td>Demo Seller</td>
+                      <td>Printing</td>
+                      <td>&#8369;320.00</td>
+                      <td>&#8369;25.00</td>
+                      <td>&#8369;345.00</td>
+                      <td><span class="badge badge-pending">Pending</span></td>
+                    </tr>
+                    <tr>
+                      <td>Admin Manager</td>
+                      <td>EWallet</td>
+                      <td>&#8369;1,500.00</td>
+                      <td>&#8369;30.00</td>
+                      <td>&#8369;1,530.00</td>
+                      <td><span class="badge badge-failed">Failed</span></td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+            </div>
+          </section>
+
+          <section class="page-section hidden" data-section="ewallet">
+            <h1 class="page-title">E-Wallet Transaction</h1>
+            <div class="card">
+              <div class="fieldset">
+                <div class="field">
+                  <label>Service Provider</label>
+                  <div class="radio-group">
+                    <button class="settings-tab active" type="button">
+                      GCash
+                    </button>
+                    <button class="settings-tab" type="button">Maya</button>
+                  </div>
+                </div>
+                <div class="field">
+                  <label>Transaction Method</label>
+                  <div class="radio-group">
+                    <button class="settings-tab active" type="button">
+                      CashIn
+                    </button>
+                    <button class="settings-tab" type="button">CashOut</button>
+                  </div>
+                </div>
+                <div class="field">
+                  <label for="ewallet-bracket">Amount Bracket</label>
+                  <select id="ewallet-bracket">
+                    <option>Select bracket</option>
+                    <option>&#8369;0 - &#8369;500</option>
+                    <option>&#8369;501 - &#8369;1,000</option>
+                    <option selected>&#8369;1,001 - &#8369;2,000</option>
+                    <option>&#8369;2,001 - &#8369;3,000</option>
+                    <option>&#8369;3,001 - &#8369;4,000</option>
+                  </select>
+                </div>
+                <div class="field">
+                  <label for="ewallet-reference">Reference Number</label>
+                  <input
+                    id="ewallet-reference"
+                    type="text"
+                    value="EW-1042-DEMO"
+                  />
+                </div>
+                <div class="field">
+                  <label for="ewallet-amount">Amount (&#8369;)</label>
+                  <input id="ewallet-amount" type="text" value="1500.00" />
+                  <p class="helper">Service Charge (2%): &#8369;30.00</p>
+                </div>
+                <button
+                  class="button button-primary button-lg"
+                  type="button"
+                  data-demo-action="Transaction created successfully!"
+                >
+                  Create Transaction
+                </button>
+              </div>
+            </div>
+          </section>
+
+          <section class="page-section hidden" data-section="printing">
+            <h1 class="page-title">Printing Service</h1>
+            <div class="card">
+              <div class="fieldset">
+                <div class="field">
+                  <label for="printing-service-type">Service Type</label>
+                  <select id="printing-service-type">
+                    <option selected>Printing</option>
+                    <option>Scanning</option>
+                    <option>Photocopy</option>
+                  </select>
+                </div>
+                <div class="field">
+                  <label>Paper Size</label>
+                  <div class="radio-group">
+                    <button class="settings-tab active" type="button">
+                      Short
+                    </button>
+                    <button class="settings-tab" type="button">Long</button>
+                  </div>
+                </div>
+                <div class="field">
+                  <label>Color Option</label>
+                  <div class="radio-group">
+                    <button class="settings-tab active" type="button">
+                      Grayscale
+                    </button>
+                    <button class="settings-tab" type="button">Colored</button>
+                  </div>
+                </div>
+                <div class="field">
+                  <label for="printing-unit-price">Unit Price (&#8369;)</label>
+                  <input id="printing-unit-price" type="text" value="8.00" />
+                </div>
+                <div class="field">
+                  <label for="printing-quantity">Quantity</label>
+                  <input id="printing-quantity" type="text" value="40" />
+                </div>
+                <div class="info-panel">
+                  <p class="muted">Total based on unit price and quantity</p>
+                  <h3
+                    style="
+                      margin-top: 0.25rem;
+                      font-size: 1.875rem;
+                      color: var(--brand);
+                    "
+                  >
+                    &#8369;320.00
+                  </h3>
+                </div>
+                <button
+                  class="button button-primary button-lg"
+                  type="button"
+                  data-demo-action="Transaction created successfully!"
+                >
+                  Create Transaction
+                </button>
+              </div>
+            </div>
+          </section>
+
+          <section class="page-section hidden" data-section="products">
+            <h1 class="page-title">Products</h1>
+            <div class="card coming-soon">
+              <span class="icon" aria-hidden="true"
+                ><svg viewBox="0 0 24 24">
+                  <circle cx="12" cy="12" r="10"></circle>
+                  <line x1="12" y1="8" x2="12" y2="12"></line>
+                  <line x1="12" y1="16" x2="12.01" y2="16"></line></svg
+              ></span>
+              <h2 style="font-size: 1.5rem; font-weight: 600">Coming Soon</h2>
+              <p class="text-muted" style="max-width: 32rem">
+                The Products feature is currently under development. Check back
+                soon for inventory and product management capabilities.
+              </p>
+            </div>
+          </section>
+
+          <section class="page-section hidden" data-section="settings">
+            <h1 class="page-title">Settings</h1>
+
+            <div class="settings-tab-row">
+              <button class="settings-tab active" type="button">
+                Appearance
+              </button>
+              <button class="settings-tab" type="button">Service Fees</button>
+              <button class="settings-tab" type="button">
+                User Management
+              </button>
+            </div>
+
+            <div class="double-grid">
+              <div class="card">
+                <div class="card-title">Appearance Settings</div>
+                <div class="surface-soft">
+                  <div
+                    style="
+                      display: flex;
+                      gap: 1rem;
+                      align-items: center;
+                      flex-wrap: wrap;
+                    "
+                  >
+                    <div
+                      class="avatar"
+                      style="width: 5rem; height: 5rem; font-size: 1.5rem"
+                    >
+                      AM
+                    </div>
+                    <div>
+                      <h3 style="font-size: 1.125rem; font-weight: 600">
+                        Profile Avatar
+                      </h3>
+                      <p class="text-muted" style="margin-top: 0.25rem">
+                        Upload a custom avatar to personalize your account
+                        across the app.
+                      </p>
+                      <p
+                        class="text-muted"
+                        style="margin-top: 0.5rem; font-size: 0.75rem"
+                      >
+                        JPG, PNG, or GIF. Max size: 2MB.
+                      </p>
+                    </div>
+                  </div>
+                  <div class="button-row" style="margin-top: 1rem">
+                    <button
+                      class="button button-primary button-md"
+                      type="button"
+                    >
+                      Upload Avatar
+                    </button>
+                    <button
+                      class="button button-secondary button-md"
+                      type="button"
+                    >
+                      Remove Avatar
+                    </button>
+                  </div>
+                </div>
+                <p class="text-muted" style="margin-top: 1rem">
+                  Theme mode is controlled by the theme toggle in the header.
+                </p>
+              </div>
+
+              <div class="card">
+                <div class="card-title">Data Export</div>
+                <p class="text-muted">
+                  Export all your transaction history as CSV for backup or
+                  analysis.
+                </p>
+                <div class="button-row" style="margin-top: 1rem">
+                  <button
+                    class="button button-primary button-md"
+                    type="button"
+                    data-demo-action="Transactions exported successfully!"
+                  >
+                    Export Transactions
+                  </button>
+                </div>
+              </div>
+            </div>
+          </section>
+
+          <div id="toast" class="alert alert-success hidden">
+            <div class="icon" aria-hidden="true">
+              <svg viewBox="0 0 24 24"><path d="M20 6 9 17l-5-5"></path></svg>
+            </div>
+            <div>
+              <h4>Success</h4>
+              <p id="toast-message"></p>
+            </div>
+          </div>
+        </main>
+      </div>
+    </section>
+
+    <script>
+      const ACCOUNTS = {
+        "admin@earnstrack.demo": {
+          email: "admin@earnstrack.demo",
+          password: "demo123",
+          fullName: "Admin Manager",
+          role: "Admin",
+          initials: "AM",
+        },
+        "seller@earnstrack.demo": {
+          email: "seller@earnstrack.demo",
+          password: "seller123",
+          fullName: "Demo Seller",
+          role: "Seller",
+          initials: "DS",
+        },
+      };
+
+      const SESSION_KEY = "earnstrack-demo-session-v3";
+      const THEME_KEY = "earnstrack-demo-theme-v3";
+
+      const loginScreen = document.getElementById("login-screen");
+      const appShell = document.getElementById("app-shell");
+      const loginForm = document.getElementById("login-form");
+      const loginError = document.getElementById("login-error");
+      const loginErrorMessage = document.getElementById("login-error-message");
+      const fillAdmin = document.getElementById("fill-admin");
+      const fillSeller = document.getElementById("fill-seller");
+      const emailInput = document.getElementById("email");
+      const passwordInput = document.getElementById("password");
+      const navGroup = document.getElementById("nav-group");
+      const sidebar = document.getElementById("sidebar");
+      const mobileOverlay = document.getElementById("mobile-overlay");
+      const menuButton = document.getElementById("menu-button");
+      const closeSidebarButton = document.getElementById("close-sidebar");
+      const logoutButton = document.getElementById("logout-button");
+      const themeToggle = document.getElementById("theme-toggle");
+      const sidebarAvatar = document.getElementById("sidebar-avatar");
+      const headerAvatar = document.getElementById("header-avatar");
+      const profileName = document.getElementById("profile-name");
+      const profileEmail = document.getElementById("profile-email");
+      const toast = document.getElementById("toast");
+      const toastMessage = document.getElementById("toast-message");
+
+      function setTheme(theme) {
+        document.body.classList.toggle("dark", theme === "dark");
+        localStorage.setItem(THEME_KEY, theme);
+      }
+
+      function openSidebar() {
+        if (window.innerWidth >= 768) {
+          return;
+        }
+
+        sidebar.classList.add("open");
+        mobileOverlay.classList.remove("hidden");
+      }
+
+      function closeSidebar() {
+        if (window.innerWidth >= 768) {
+          return;
+        }
+
+        sidebar.classList.remove("open");
+        mobileOverlay.classList.add("hidden");
+      }
+
+      function showToast(message) {
+        toastMessage.textContent = message;
+        toast.classList.remove("hidden");
+        clearTimeout(showToast.timer);
+        showToast.timer = setTimeout(() => {
+          toast.classList.add("hidden");
+        }, 2200);
+      }
+
+      function setView(view) {
+        document.querySelectorAll(".nav-button").forEach((button) => {
+          button.classList.toggle("active", button.dataset.view === view);
+        });
+
+        document.querySelectorAll("[data-section]").forEach((section) => {
+          section.classList.toggle("hidden", section.dataset.section !== view);
+        });
+
+        closeSidebar();
+      }
+
+      function renderNavigation(account) {
+        const items = [
+          {
+            label: "Dashboard",
+            view: "dashboard",
+            icon: '<svg viewBox="0 0 24 24"><path d="M3 9.5 12 3l9 6.5"></path><path d="M5 10v10h14V10"></path></svg>',
+          },
+          {
+            label: "E-Wallet",
+            view: "ewallet",
+            icon: '<svg viewBox="0 0 24 24"><rect x="2" y="6" width="20" height="12" rx="2"></rect><path d="M16 12h.01"></path></svg>',
+          },
+          {
+            label: "Printing",
+            view: "printing",
+            icon: '<svg viewBox="0 0 24 24"><path d="M6 9V2h12v7"></path><path d="M6 18H4a2 2 0 0 1-2-2v-5a2 2 0 0 1 2-2h16a2 2 0 0 1 2 2v5a2 2 0 0 1-2 2h-2"></path><path d="M6 14h12v8H6z"></path></svg>',
+          },
+          {
+            label: "Products",
+            view: "products",
+            icon: '<svg viewBox="0 0 24 24"><path d="M6 2 3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4Z"></path><path d="M3 6h18"></path><path d="M16 10a4 4 0 0 1-8 0"></path></svg>',
+          },
+        ];
+
+        if (account.role === "Admin") {
+          items.push({
+            label: "Settings",
+            view: "settings",
+            icon: '<svg viewBox="0 0 24 24"><path d="M12 1v2"></path><path d="M12 21v2"></path><path d="m4.93 4.93 1.41 1.41"></path><path d="m17.66 17.66 1.41 1.41"></path><path d="M1 12h2"></path><path d="M21 12h2"></path><path d="m4.93 19.07 1.41-1.41"></path><path d="m17.66 6.34 1.41-1.41"></path><circle cx="12" cy="12" r="3"></circle></svg>',
+          });
+        }
+
+        navGroup.innerHTML = items
+          .map((item, index) => {
+            return (
+              '<button class="nav-button' +
+              (index === 0 ? " active" : "") +
+              '" data-view="' +
+              item.view +
+              '" type="button"><span class="icon">' +
+              item.icon +
+              "</span><span>" +
+              item.label +
+              "</span></button>"
+            );
+          })
+          .join("");
+
+        navGroup.querySelectorAll(".nav-button").forEach((button) => {
+          button.addEventListener("click", () => setView(button.dataset.view));
+        });
+      }
+
+      function updateProfile(account) {
+        sidebarAvatar.textContent = account.initials;
+        headerAvatar.textContent = account.initials;
+        profileName.textContent = account.fullName;
+        profileEmail.textContent = account.email;
+      }
+
+      function signIn(account) {
+        localStorage.setItem(SESSION_KEY, JSON.stringify(account));
+        updateProfile(account);
+        renderNavigation(account);
+        loginScreen.classList.add("hidden");
+        appShell.classList.remove("hidden");
+        setView("dashboard");
+      }
+
+      function signOut() {
+        localStorage.removeItem(SESSION_KEY);
+        appShell.classList.add("hidden");
+        loginScreen.classList.remove("hidden");
+        closeSidebar();
+      }
+
+      function fillAccount(email) {
+        const account = ACCOUNTS[email];
+        emailInput.value = account.email;
+        passwordInput.value = account.password;
+        loginError.classList.add("hidden");
+      }
+
+      loginForm.addEventListener("submit", (event) => {
+        event.preventDefault();
+        const email = emailInput.value.trim().toLowerCase();
+        const password = passwordInput.value;
+        const account = ACCOUNTS[email];
+
+        if (!account || account.password !== password) {
+          loginErrorMessage.textContent =
+            "Invalid email or password. Please try again.";
+          loginError.classList.remove("hidden");
+          return;
+        }
+
+        loginError.classList.add("hidden");
+        signIn(account);
+      });
+
+      fillAdmin.addEventListener("click", () =>
+        fillAccount("admin@earnstrack.demo"),
+      );
+      fillSeller.addEventListener("click", () =>
+        fillAccount("seller@earnstrack.demo"),
+      );
+      logoutButton.addEventListener("click", signOut);
+      menuButton.addEventListener("click", openSidebar);
+      closeSidebarButton.addEventListener("click", closeSidebar);
+      mobileOverlay.addEventListener("click", closeSidebar);
+
+      themeToggle.addEventListener("click", () => {
+        setTheme(document.body.classList.contains("dark") ? "light" : "dark");
+      });
+
+      window.addEventListener("resize", () => {
+        if (window.innerWidth >= 768) {
+          mobileOverlay.classList.add("hidden");
+          sidebar.classList.remove("open");
+        }
+      });
+
+      document.querySelectorAll("[data-demo-action]").forEach((button) => {
+        button.addEventListener("click", () =>
+          showToast(button.getAttribute("data-demo-action")),
+        );
+      });
+
+      setTheme(localStorage.getItem(THEME_KEY) || "light");
+
+      const savedSession = localStorage.getItem(SESSION_KEY);
+      if (savedSession) {
+        signIn(JSON.parse(savedSession));
+      }
+    </script>
+  </body>
+</html>
