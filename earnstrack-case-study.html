@@ -423,11 +423,12 @@
           <p class="eyebrow">Case Study</p>
           <h1>Earnstrack</h1>
           <p>
-            Earnstrack is a full-stack transaction tracker for e-wallet and
-            printing-service operations. The project combines a React and
-            TypeScript frontend with an ASP.NET Core backend, JWT
-            authentication, role-based access control, service fee management,
-            CSV export, and PostgreSQL persistence.
+            Earnstrack is a full-stack transaction tracker for e-wallet,
+            e-loading, bills payment, and printing-service operations. The
+            project combines a React and TypeScript frontend with an ASP.NET
+            Core backend, JWT authentication, role-based access control, service
+            fee management, product inventory, CSV export, and PostgreSQL
+            persistence.
           </p>
         </div>
         <div class="hero-side">
@@ -522,6 +523,8 @@
                     <div class="dash-nav-item active">Dashboard</div>
                     <div class="dash-nav-item">E-Wallet</div>
                     <div class="dash-nav-item">Printing</div>
+                    <div class="dash-nav-item">E-Loading</div>
+                    <div class="dash-nav-item">Bills Payment</div>
                     <div class="dash-nav-item">Products</div>
                     <div class="dash-nav-item">Settings</div>
                   </div>
@@ -687,6 +690,17 @@
                   >
                     User Management
                   </div>
+                  <div
+                    style="
+                      padding: 8px 16px;
+                      border-radius: 8px;
+                      background: #e5e7eb;
+                      color: #111827;
+                      font-weight: 500;
+                    "
+                  >
+                    Products
+                  </div>
                 </div>
                 <div
                   style="
@@ -802,8 +816,10 @@
             <div class="shot-caption">
               <h3>Settings view</h3>
               <p>
-                Reflects the SettingsPage structure with tab navigation,
-                appearance controls, avatar management, and transaction export.
+                Reflects the SettingsPage structure with tab navigation
+                (Appearance, Service Fees, User Management, Products),
+                appearance controls, avatar management, product inventory
+                management, and transaction export.
               </p>
             </div>
           </article>
@@ -871,8 +887,8 @@
           <div class="step panel">
             <h3>2. Record transactions by service</h3>
             <p>
-              Separate forms support E-Wallet and Printing workflows while still
-              feeding a single reporting model.
+              Separate forms support E-Wallet, E-Loading, Bills Payment, and
+              Printing workflows while still feeding a single reporting model.
             </p>
           </div>
           <div class="step panel">
@@ -886,7 +902,8 @@
             <h3>4. Admin configuration</h3>
             <p>
               Settings provide appearance control, service fee management, user
-              administration, and transaction export.
+              administration, product inventory management, and transaction
+              export.
             </p>
           </div>
         </div>
@@ -971,8 +988,9 @@
           <div class="summary panel">
             <h3>Room to grow</h3>
             <p>
-              The existing structure leaves space for features like inventory,
-              richer reporting, and more service categories.
+              The existing structure leaves space for richer reporting,
+              analytics dashboards, and additional service categories beyond the
+              four currently supported.
             </p>
           </div>
         </div>

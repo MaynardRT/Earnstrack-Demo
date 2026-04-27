@@ -873,7 +873,8 @@
               <span class="text-muted">Views</span>
               <strong>Dashboard + Services</strong>
               <p class="text-muted">
-                Login, E-Wallet, Printing, Products, Settings.
+                Login, E-Wallet, E-Loading, Bills Payment, Printing, Products,
+                Settings.
               </p>
             </div>
             <div class="surface-soft">
@@ -1189,10 +1190,30 @@
                     </tr>
                     <tr>
                       <td>Demo Seller</td>
+                      <td>ELoading</td>
+                      <td>&#8369;100.00</td>
+                      <td>&#8369;5.00</td>
+                      <td>&#8369;105.00</td>
+                      <td>
+                        <span class="badge badge-completed">Completed</span>
+                      </td>
+                    </tr>
+                    <tr>
+                      <td>Admin Manager</td>
+                      <td>BillsPayment</td>
+                      <td>&#8369;1,500.00</td>
+                      <td>&#8369;25.00</td>
+                      <td>&#8369;1,525.00</td>
+                      <td>
+                        <span class="badge badge-completed">Completed</span>
+                      </td>
+                    </tr>
+                    <tr>
+                      <td>Demo Seller</td>
                       <td>Printing</td>
                       <td>&#8369;320.00</td>
-                      <td>&#8369;25.00</td>
-                      <td>&#8369;345.00</td>
+                      <td>&#8369;0.00</td>
+                      <td>&#8369;320.00</td>
                       <td><span class="badge badge-pending">Pending</span></td>
                     </tr>
                     <tr>
@@ -1266,6 +1287,99 @@
             </div>
           </section>
 
+          <section class="page-section hidden" data-section="eloading">
+            <h1 class="page-title">E-Loading</h1>
+            <div class="card">
+              <div class="fieldset">
+                <div class="field">
+                  <label for="eloading-network">Mobile Network</label>
+                  <select id="eloading-network">
+                    <option>Globe</option>
+                    <option>Smart</option>
+                    <option>Dito</option>
+                    <option>TnT</option>
+                    <option>TM</option>
+                    <option>Sun</option>
+                    <option>SurftoSawa</option>
+                  </select>
+                </div>
+                <div class="field">
+                  <label for="eloading-phone">Phone Number</label>
+                  <input id="eloading-phone" type="tel" value="09171234567" />
+                </div>
+                <div class="field">
+                  <label for="eloading-amount">Load Amount (&#8369;)</label>
+                  <input id="eloading-amount" type="text" value="100.00" />
+                  <p class="helper">
+                    Service Charge: &#8369;5.00 (&#8369;25.00 for SurftoSawa)
+                  </p>
+                </div>
+                <div class="info-panel">
+                  <p class="muted">Total amount including service charge</p>
+                  <h3
+                    style="
+                      margin-top: 0.25rem;
+                      font-size: 1.875rem;
+                      color: var(--brand);
+                    "
+                  >
+                    &#8369;105.00
+                  </h3>
+                </div>
+                <button
+                  class="button button-primary button-lg"
+                  type="button"
+                  data-demo-action="E-Load transaction created successfully!"
+                >
+                  Create E-Load Transaction
+                </button>
+              </div>
+            </div>
+          </section>
+
+          <section class="page-section hidden" data-section="bills-payment">
+            <h1 class="page-title">Bills Payment</h1>
+            <div class="card">
+              <div class="fieldset">
+                <div class="field">
+                  <label for="bills-biller">Biller</label>
+                  <select id="bills-biller">
+                    <option>Meralco</option>
+                    <option>Maynilad</option>
+                    <option>Manila Water</option>
+                    <option>PLDT</option>
+                    <option>Converge</option>
+                    <option>Globe</option>
+                  </select>
+                </div>
+                <div class="field">
+                  <label for="bills-amount">Bill Amount (&#8369;)</label>
+                  <input id="bills-amount" type="text" value="1500.00" />
+                  <p class="helper">Service Charge: &#8369;25.00</p>
+                </div>
+                <div class="info-panel">
+                  <p class="muted">Total amount including service charge</p>
+                  <h3
+                    style="
+                      margin-top: 0.25rem;
+                      font-size: 1.875rem;
+                      color: var(--brand);
+                    "
+                  >
+                    &#8369;1,525.00
+                  </h3>
+                </div>
+                <button
+                  class="button button-primary button-lg"
+                  type="button"
+                  data-demo-action="Bills payment transaction created successfully!"
+                >
+                  Create Bills Payment Transaction
+                </button>
+              </div>
+            </div>
+          </section>
+
           <section class="page-section hidden" data-section="printing">
             <h1 class="page-title">Printing Service</h1>
             <div class="card">
@@ -1329,18 +1443,125 @@
 
           <section class="page-section hidden" data-section="products">
             <h1 class="page-title">Products</h1>
-            <div class="card coming-soon">
-              <span class="icon" aria-hidden="true"
-                ><svg viewBox="0 0 24 24">
-                  <circle cx="12" cy="12" r="10"></circle>
-                  <line x1="12" y1="8" x2="12" y2="12"></line>
-                  <line x1="12" y1="16" x2="12.01" y2="16"></line></svg
-              ></span>
-              <h2 style="font-size: 1.5rem; font-weight: 600">Coming Soon</h2>
-              <p class="text-muted" style="max-width: 32rem">
-                The Products feature is currently under development. Check back
-                soon for inventory and product management capabilities.
-              </p>
+            <div
+              style="
+                display: grid;
+                grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+                gap: 1rem;
+              "
+            >
+              <div class="card" style="display: grid; gap: 0.75rem">
+                <h3 style="font-size: 1.125rem; font-weight: 600">Ballpen</h3>
+                <p style="font-size: 1.5rem; font-weight: 700; color: #2563eb">
+                  &#8369;12.00
+                </p>
+                <p
+                  style="font-size: 0.875rem; font-weight: 500; color: #16a34a"
+                >
+                  24 in stock
+                </p>
+                <button
+                  class="button button-primary button-md"
+                  type="button"
+                  data-demo-action="Sold 1x Ballpen"
+                >
+                  Sell
+                </button>
+              </div>
+              <div class="card" style="display: grid; gap: 0.75rem">
+                <h3 style="font-size: 1.125rem; font-weight: 600">Notebook</h3>
+                <p style="font-size: 1.5rem; font-weight: 700; color: #2563eb">
+                  &#8369;45.00
+                </p>
+                <p
+                  style="font-size: 0.875rem; font-weight: 500; color: #16a34a"
+                >
+                  10 in stock
+                </p>
+                <button
+                  class="button button-primary button-md"
+                  type="button"
+                  data-demo-action="Sold 1x Notebook"
+                >
+                  Sell
+                </button>
+              </div>
+              <div class="card" style="display: grid; gap: 0.75rem">
+                <h3 style="font-size: 1.125rem; font-weight: 600">
+                  Bond Paper (ream)
+                </h3>
+                <p style="font-size: 1.5rem; font-weight: 700; color: #2563eb">
+                  &#8369;220.00
+                </p>
+                <p
+                  style="font-size: 0.875rem; font-weight: 500; color: #16a34a"
+                >
+                  5 in stock
+                </p>
+                <button
+                  class="button button-primary button-md"
+                  type="button"
+                  data-demo-action="Sold 1x Bond Paper (ream)"
+                >
+                  Sell
+                </button>
+              </div>
+              <div class="card" style="display: grid; gap: 0.75rem">
+                <h3 style="font-size: 1.125rem; font-weight: 600">Folder</h3>
+                <p style="font-size: 1.5rem; font-weight: 700; color: #2563eb">
+                  &#8369;15.00
+                </p>
+                <p
+                  style="font-size: 0.875rem; font-weight: 500; color: #dc2626"
+                >
+                  Out of stock
+                </p>
+                <button
+                  class="button button-secondary button-md"
+                  type="button"
+                  disabled
+                >
+                  Out of Stock
+                </button>
+              </div>
+              <div class="card" style="display: grid; gap: 0.75rem">
+                <h3 style="font-size: 1.125rem; font-weight: 600">Envelope</h3>
+                <p style="font-size: 1.5rem; font-weight: 700; color: #2563eb">
+                  &#8369;8.00
+                </p>
+                <p
+                  style="font-size: 0.875rem; font-weight: 500; color: #16a34a"
+                >
+                  50 in stock
+                </p>
+                <button
+                  class="button button-primary button-md"
+                  type="button"
+                  data-demo-action="Sold 1x Envelope"
+                >
+                  Sell
+                </button>
+              </div>
+              <div class="card" style="display: grid; gap: 0.75rem">
+                <h3 style="font-size: 1.125rem; font-weight: 600">
+                  Correction Tape
+                </h3>
+                <p style="font-size: 1.5rem; font-weight: 700; color: #2563eb">
+                  &#8369;35.00
+                </p>
+                <p
+                  style="font-size: 0.875rem; font-weight: 500; color: #16a34a"
+                >
+                  18 in stock
+                </p>
+                <button
+                  class="button button-primary button-md"
+                  type="button"
+                  data-demo-action="Sold 1x Correction Tape"
+                >
+                  Sell
+                </button>
+              </div>
             </div>
           </section>
 
@@ -1355,6 +1576,7 @@
               <button class="settings-tab" type="button">
                 User Management
               </button>
+              <button class="settings-tab" type="button">Products</button>
             </div>
 
             <div class="double-grid">
@@ -1542,6 +1764,16 @@
             label: "E-Wallet",
             view: "ewallet",
             icon: '<svg viewBox="0 0 24 24"><rect x="2" y="6" width="20" height="12" rx="2"></rect><path d="M16 12h.01"></path></svg>',
+          },
+          {
+            label: "E-Loading",
+            view: "eloading",
+            icon: '<svg viewBox="0 0 24 24"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"></polygon></svg>',
+          },
+          {
+            label: "Bills Payment",
+            view: "bills-payment",
+            icon: '<svg viewBox="0 0 24 24"><path d="M4 2v20l2-1 2 1 2-1 2 1 2-1 2 1 2-1 2 1V2l-2 1-2-1-2 1-2-1-2 1-2-1-2 1Z"></path><path d="M14 8H8"></path><path d="M16 12H8"></path><path d="M13 16H8"></path></svg>',
           },
           {
             label: "Printing",
